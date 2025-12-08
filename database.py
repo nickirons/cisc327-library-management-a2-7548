@@ -56,16 +56,16 @@ def add_sample_data():
     if book_count == 0:
         # Add sample books
         sample_books = [
-            ('The Great Gatsby', 'F. Scott Fitzgerald', '9780743273565', 3),
-            ('To Kill a Mockingbird', 'Harper Lee', '9780061120084', 2),
-            ('1984', 'George Orwell', '9780451524935', 1)
+            ("Talking with strangers", "Malcolm gladwell", "9780547928227", 3, 3),
+            ("Sapiens", "Yuval Noah Harari", "9781328651935", 2, 2),
+            ("Dune", "Frank Herbert", "9780441172719", 1, 1)
         ]
         
-        for title, author, isbn, copies in sample_books:
+        for title, author, isbn, copies, available in sample_books:
             conn.execute('''
                 INSERT INTO books (title, author, isbn, total_copies, available_copies)
                 VALUES (?, ?, ?, ?, ?)
-            ''', (title, author, isbn, copies, copies))
+            ''', (title, author, isbn, copies, available))
         
         # Make 1984 unavailable by adding a borrow record
         conn.execute('''
@@ -174,9 +174,22 @@ def update_book_availability(book_id: int, change: int) -> bool:
     """Update the available copies of a book by a given amount (+1 for return, -1 for borrow)."""
     conn = get_db_connection()
     try:
-        conn.execute('''
-            UPDATE books SET available_copies = available_copies + ? WHERE id = ?
-        ''', (change, book_id))
+        current = conn.execute(
+            'SELECT available_copies, total_copies FROM books WHERE id = ?', (book_id,)
+        ).fetchone()
+        if not current:
+            conn.close()
+            return False
+
+        new_value = current['available_copies'] + change
+        if new_value < 0 or new_value > current['total_copies']:
+            conn.close()
+            return False
+
+        conn.execute(
+            'UPDATE books SET available_copies = ? WHERE id = ?',
+            (new_value, book_id)
+        )
         conn.commit()
         conn.close()
         return True
