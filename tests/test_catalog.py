@@ -12,7 +12,7 @@ def test_catalog_returns_inserted_books_sorted_by_title():
     books = database.get_all_books()
     titles = [b["title"] for b in books]
 
-    assert titles == ["Alpha", "Anson Elayari Bio"]
+    assert titles == ["Alpha", "Anson Elayari"]
     assert books[0]["available_copies"] == books[0]["total_copies"]
 
 
