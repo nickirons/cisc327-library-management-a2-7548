@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import database
-from library_service import get_patron_status_report
+from services.library_service import get_patron_status_report
 
 
 def test_patron_status_includes_current_borrows_and_fees():

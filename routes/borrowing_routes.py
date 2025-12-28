@@ -3,7 +3,7 @@ Borrowing Routes - Book borrowing and returning endpoints
 """
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from library_service import borrow_book_by_patron, return_book_by_patron
+from services.library_service import borrow_book_by_patron, return_book_by_patron
 
 borrowing_bp = Blueprint('borrowing', __name__)
 
@@ -57,7 +57,7 @@ def patron_status():
     Display patron status report.
     Web interface for R7: Patron Status Report
     """
-    from library_service import get_patron_status_report
+    from services.library_service import get_patron_status_report
     
     status_data = None
     

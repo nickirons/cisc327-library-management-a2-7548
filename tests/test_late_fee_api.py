@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import database
-from library_service import calculate_late_fee_for_book
+from services.library_service import calculate_late_fee_for_book
 
 
 def seed_borrow(patron_id: str, book_id: int, borrow_days_ago: int):

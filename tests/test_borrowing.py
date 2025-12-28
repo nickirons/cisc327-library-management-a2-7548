@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 import database
-from library_service import borrow_book_by_patron
+from services.library_service import borrow_book_by_patron
 
 
 def add_book(isbn="9781111111111", copies=2):
