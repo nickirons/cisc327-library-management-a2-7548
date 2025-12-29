@@ -83,7 +83,7 @@ def test_pay_late_fees_handles_network_error(mocker):
 
 #========================
 # Refund late fee payment tests
-# ==================
+# =================
 
 def test_refund_late_fee_payment_success():
     mock_gateway = Mock(spec=PaymentGateway)

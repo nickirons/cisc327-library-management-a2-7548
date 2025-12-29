@@ -26,4 +26,6 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m pytest
+          # E2E tests require Playwright browsers; run them manually via:
+          # pytest tests/test_e2e.py
+          python -m pytest --ignore=tests/test_e2e.py

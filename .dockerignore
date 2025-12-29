@@ -1,0 +1,10 @@
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.db
+htmlcov
+.pytest_cache
+.mypy_cache
+.DS_Store
+*.zip
